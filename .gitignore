@@ -50,7 +50,6 @@ wheels/
 .installed.cfg
 *.egg
 
-#file_storage
+#task_manager
 uploads/
-migrations/versions
 tests/
