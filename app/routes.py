@@ -1,11 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from app.models import (
-    TaskModel,
-    HandleYoutubeVideo,
-    HandleTorrentFileVideo,
-    HandleCustomUserVideo,
-)
+from app.models import TaskModel, HandleYoutubeVideo
 from app.services import TaskService
 
 task_router = APIRouter(prefix="/task", tags=["Task"])
@@ -23,17 +18,3 @@ async def handle_youtube_video(
     event: HandleYoutubeVideo, task_service: TaskService = Depends()
 ) -> TaskModel:
     return await task_service.handle_youtube_video(event)
-
-
-@task_router.post("/handle/torrent")
-async def handle_torrent_file_video(
-    event: HandleTorrentFileVideo, task_service: TaskService = Depends()
-) -> TaskModel:
-    return task_service.handle_torrent_file_video(event)
-
-
-@task_router.post("/handle/custom")
-async def handle_custom_user_video(
-    event: HandleCustomUserVideo, task_service: TaskService = Depends()
-) -> TaskModel:
-    return task_service.handle_custom_user_video(event)

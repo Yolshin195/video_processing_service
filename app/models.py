@@ -4,21 +4,25 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict
 
 
-class ReferenceModel(BaseModel):
+class EntityModel(BaseModel):
+    id: UUID
+
+
+class ReferenceModel(EntityModel):
     code: str
     name: str
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class FileModel(BaseModel):
+class FileModel(EntityModel):
     file_id: UUID
     name: str
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class TaskModel(BaseModel):
+class TaskModel(EntityModel):
     status: ReferenceModel
     type: ReferenceModel
     file_source_url: Optional[str]

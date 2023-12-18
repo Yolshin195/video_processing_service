@@ -1,15 +1,8 @@
-from typing import AsyncIterator
 from uuid import UUID
 
 from .constants import StatusEnum, TypeEnum
-from .entities import TaskEntity, StatusEntity, TypeEntity
-from .mappers import task_mapper, face_task_mapper
-from .models import (
-    TaskModel,
-    HandleYoutubeVideo,
-    HandleTorrentFileVideo,
-    HandleCustomUserVideo,
-)
+from .entities import TaskEntity
+from .models import TaskModel, HandleYoutubeVideo
 from .repositories import TaskRepository, StatusRepository, TypeRepository
 from core import BaseService
 
@@ -27,7 +20,7 @@ class TaskService(BaseService):
         ]
 
     async def find_by_id(self, task_id: UUID) -> TaskModel:
-        return task_mapper(await self.repository.find_by_id(task_id))
+        return TaskModel.model_validate(await self.repository.find_by_id(task_id))
 
     async def handle_youtube_video(self, event: HandleYoutubeVideo) -> TaskModel:
         current_status = await self.status_repository.find_by_code(
@@ -39,12 +32,4 @@ class TaskService(BaseService):
             type_id=current_type.id,
             file_source_url=event.url,
         )
-        return task_mapper(await self.repository.add_one(new_task))
-
-    def handle_torrent_file_video(self, event: HandleTorrentFileVideo) -> TaskModel:
-        return face_task_mapper(
-            StatusEnum.CREATED, TypeEnum.TORRENT, event.torrent_file
-        )
-
-    def handle_custom_user_video(self, event: HandleCustomUserVideo) -> TaskModel:
-        return face_task_mapper(StatusEnum.CREATED, TypeEnum.CUSTOM, event.user_video)
+        return TaskModel.model_validate(await self.repository.add_one(new_task))
