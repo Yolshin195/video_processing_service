@@ -9,6 +9,3 @@ class BaseReferenceEntity(BaseEntity):
     code: Mapped[str]
     name: Mapped[str]
     description: Mapped[str | None]
-
-
-    

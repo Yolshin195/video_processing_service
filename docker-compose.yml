@@ -2,7 +2,7 @@ version: "3.7"
 services:
   db:
     image: postgres:16
-    container_name: file_storage_db
+    container_name: task_manager_db
     env_file:
       - .env-non-dev
     command: -p 5435
@@ -15,7 +15,7 @@ services:
     env_file:
       - .env-non-dev
     container_name: task_manager_app
-    command: ["/file_storage/docker/file_storage_run.sh"]
+    command: ["/task_manager/docker/task_manager_run.sh"]
     ports:
       - "8000:8000"
     depends_on:

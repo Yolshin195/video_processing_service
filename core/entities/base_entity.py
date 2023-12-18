@@ -9,6 +9,8 @@ def now_utc():
 
 
 class BaseEntity(DeclarativeBase):
-    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4, unique=True, nullable=False)
+    id: Mapped[UUID] = mapped_column(
+        primary_key=True, default=uuid4, unique=True, nullable=False
+    )
     created: Mapped[datetime] = mapped_column(default=now_utc)
     updated: Mapped[datetime] = mapped_column(default=now_utc, onupdate=now_utc)
