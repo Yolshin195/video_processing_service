@@ -1,9 +1,8 @@
-from typing import TypeVar, Sequence, Type, AsyncIterator
+from typing import TypeVar, Type, AsyncIterator
 from uuid import UUID
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
 
 from core.entities import BaseEntity
 

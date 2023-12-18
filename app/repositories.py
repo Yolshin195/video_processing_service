@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from sqlalchemy import select
 
 from app.entities import TaskEntity, FileEntity, TypeEntity, StatusEntity
